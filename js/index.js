@@ -77,14 +77,17 @@ function deleted(event) {
 /* resumen: Esta función cambia el título de la columna seleccionada. */
 
 function changeTitle(cardTitles) {
-  for (let i = 0; i < cardTitles.length; i++) { //itero sobre cada uno de loselementos con la clase title-card para buscar el que me interesa
+  for (let i = 0; i < cardTitles.length; i++) {
+    //itero sobre cada uno de loselementos con la clase title-card para buscar el que me interesa
     (function (index) {
       cardTitles[index].addEventListener("click", function () {
-        let newTitle = prompt( //el promt crea una alerta donde el usuario ingresa el nombre que quiere para la fila
+        let newTitle = prompt(
+          //el promt crea una alerta donde el usuario ingresa el nombre que quiere para la fila
           "Enter a new title:",
           cardTitles[index].innerHTML
         );
-        if (newTitle != "") { //verifico que el texto ingresado no sera ""
+        if (newTitle != "") {
+          //verifico que el texto ingresado no sera ""
           cardTitles[index].innerHTML = newTitle; //si el texto es correcto lo cambio en HTML
         }
       });
@@ -94,9 +97,11 @@ function changeTitle(cardTitles) {
 /* resumen: lo que ocurre ccon estos fetch es la obtencion de datos json a la integraacion de tarjetas en html  */
 fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/users")
   .then((response) => response.json()) //recibo el respoonse y lo paso a json
-  .then((data) => { 
-    for (let u = 0; u < data.length; u++) { //con los datos que obtengo los itero de modo de usar todos los que necesito
-      const addUserCardParams = { //esta estructura es un obejto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
+  .then((data) => {
+    for (let u = 0; u < data.length; u++) {
+      //con los datos que obtengo los itero de modo de usar todos los que necesito
+      const addUserCardParams = {
+        //esta estructura es un objeto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
         columnAdd: 0,
         type: "user",
         title: data[u].role,
@@ -109,12 +114,13 @@ fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/users")
   })
   .catch((err) => console.log(err)); //en caso que ocurra un error lo tomo y lo imprimo en un log
 
-  /* resumen: lo mismo que el anterior */
+/* resumen: lo mismo que el anterior */
 fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/colors")
   .then((response) => response.json())
   .then((data) => {
     for (let e = 0; e < data.length; e++) {
-      const addColorCardParams = { //esta estructura es un obejto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
+      const addColorCardParams = {
+        //esta estructura es un obejto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
         columnAdd: 1,
         type: "color",
         title: data[e].role,
@@ -124,3 +130,16 @@ fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/colors")
     }
   })
   .catch((err) => console.log(err)); //en caso que ocurra un error lo tomo y lo imprimo en un log
+
+
+/* async function addJoke(){
+  try{
+  const response = await (await fetch("https://api.chucknorris.io/jokes/random")).json();
+  return response;
+}
+  catch(err){
+    console.log(err);
+  }
+}
+
+addJoke(); */
