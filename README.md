@@ -6,7 +6,7 @@ The project is a web page whose objective is a first approach to the use of APIs
   - CSS
   - JavaScript.
 
-  ### as the only complement is used:
+  ### Plugin using::
   - "Prettier - Code formatter"
 
 ## author ✒️
@@ -15,7 +15,7 @@ The project is a web page whose objective is a first approach to the use of APIs
 * [LinkedIn](https://www.linkedin.com/in/franco-robotti-415786229/)
 
 ## See live example
-- [live example](https://robottifranco.github.io/api-usage/)
+- [Live example](https://robottifranco.github.io/api-usage/)
 
 ## instalación
 This project does not need installation.
