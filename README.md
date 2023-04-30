@@ -1,14 +1,14 @@
 ## Description
 The project is a web page whose objective is a first approach to the use of APIs.
 
-  ##This project is basing on the stack of front end technologies:
--HTML
--CSS
--JavaScript.
+  ## This project is basing on the stack of front end technologies:
+  -HTML
+  -CSS
+  -JavaScript.
 
-  ##as the only complement is used:
-- "Prettier - Code formatter"
- 
+  # as the only complement is used:
+  - "Prettier - Code formatter"
+
 ## author ✒️
 **Franco Robotti**
 
