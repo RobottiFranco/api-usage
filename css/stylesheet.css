@@ -118,3 +118,9 @@ button {
   cursor: pointer;
 
 }
+
+.card img {
+  display: block;
+  margin: auto;
+  max-width: 90%;
+}

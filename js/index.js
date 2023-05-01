@@ -9,17 +9,25 @@ changeTitle(cardTitles); //borra las tarjetas existentes y futuras creadas
 
 /* eventos */
 
+colorCard();
+userCard();
+
 /* resumen : evento que elijo y agrego una tarjeta por defecto segun la posicion del boton */
 for (let i = 0; i < button_add_card.length; i++) {
   //itero sobre todos los elementos hasta encontrar el llamado que me interesa antender
   button_add_card[i].addEventListener("click", function () {
+    console.log(i);
     //le agrego el evento de agregar tarjeta al boton que busque
-    const addDefaultCard = {
-      //estos parametros son para usar en el addCard, ya que todos son opcionales. (es un objeto)
-      columnAdd: i,
-      type: "user",
-    };
-    addCard(addDefaultCard); //lamado a la fauncion
+    if (i == 2) {
+      jokeCard();
+    } else {
+      const addDefaultCard = {
+        //estos parametros son para usar en el addCard, ya que todos son opcionales. (es un objeto)
+        columnAdd: i,
+        type: "user",
+      };
+      addCard(addDefaultCard); //lamado a la fauncion
+    }
   });
 }
 
@@ -45,6 +53,9 @@ function addCard({
     case "user":
       addCardUser(card, title, name, lastName, description);
       break;
+    case "joke":
+      addCardJoke(card, title, description);
+      break;
 
     default:
       addCardUser(card, title, name, lastName, description);
@@ -55,18 +66,23 @@ function addCard({
 }
 
 /* resumen: da el formato al tipo de tarjeta de tipo user (primera columna) */
-function addCardUser(card, title, name, lastName, descriptionUser) {
+function addCardUser(card, title, name, lastName, description) {
   card.innerHTML = `
     <h2>${title}</h2>
     <p>Name: ${name} ${lastName}</p>
-    <p>Description: ${descriptionUser}<p>`; //crea los elementos de la tarjeta
+    <p>Description: ${description}<p>`; //crea los elementos de la tarjeta
 }
 
 /* resumen: da el formato al tipo de tarjeta de tipo color (segunda columna) */
-function addCardColor(card, role, descriptionColor) {
+function addCardColor(card, title, description) {
   card.innerHTML = ` 
-    <h2>${role}</h2>
-    <p>Colors: ${descriptionColor}</p>`; //crea los elementos de la tarjeta
+    <h2>${title}</h2>
+    <p>Colors: ${description}</p>`; //crea los elementos de la tarjeta
+}
+
+function addCardJoke(card, title, description) {
+  card.innerHTML = `<h2>${title}</h2>
+    <img src="${description}">`; //crea los elementos de la tarjeta
 }
 
 /* resumen: borra las tarjetas creadas y por crear segun se elija mediante 1 click */
@@ -94,52 +110,77 @@ function changeTitle(cardTitles) {
     })(i);
   }
 }
+
 /* resumen: lo que ocurre ccon estos fetch es la obtencion de datos json a la integraacion de tarjetas en html  */
-fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/users")
-  .then((response) => response.json()) //recibo el respoonse y lo paso a json
-  .then((data) => {
-    for (let u = 0; u < data.length; u++) {
-      //con los datos que obtengo los itero de modo de usar todos los que necesito
-      const addUserCardParams = {
-        //esta estructura es un objeto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
-        columnAdd: 0,
-        type: "user",
-        title: data[u].role,
-        name: data[u].name,
-        lastName: data[u].lastName,
-        description: data[u].description,
-      };
-      addCard(addUserCardParams); //lamo a la funcion con los parametros que le di
-    }
-  })
-  .catch((err) => console.log(err)); //en caso que ocurra un error lo tomo y lo imprimo en un log
-
-/* resumen: lo mismo que el anterior */
-fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/colors")
-  .then((response) => response.json())
-  .then((data) => {
-    for (let e = 0; e < data.length; e++) {
-      const addColorCardParams = {
-        //esta estructura es un obejto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
-        columnAdd: 1,
-        type: "color",
-        title: data[e].role,
-        description: data[e].color,
-      };
-      addCard(addColorCardParams); //lamo a la funcion con los parametros que le di
-    }
-  })
-  .catch((err) => console.log(err)); //en caso que ocurra un error lo tomo y lo imprimo en un log
-
-
-/* async function addJoke(){
-  try{
-  const response = await (await fetch("https://api.chucknorris.io/jokes/random")).json();
-  return response;
-}
-  catch(err){
-    console.log(err);
+function userCard() {
+  try {
+    fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/users")
+      .then((response) => response.json()) //recibo el respoonse y lo paso a json
+      .then((data) => {
+        for (let u = 0; u < data.length; u++) {
+          //con los datos que obtengo los itero de modo de usar todos los que necesito
+          const addUserCardParams = {
+            //esta estructura es un objeto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
+            columnAdd: 0,
+            type: "user",
+            title: data[u].role,
+            name: data[u].name,
+            lastName: data[u].lastName,
+            description: data[u].description,
+          };
+          addCard(addUserCardParams); //lamo a la funcion con los parametros que le di
+        }
+      });
+  } catch (error) {
+    console.log(error);
   }
 }
 
-addJoke(); */
+/* resumen: lo mismo que el anterior */
+function colorCard() {
+  try {
+    fetch("https://my-json-server.typicode.com/RobottiFranco/API-FAKE/colors")
+      .then((response) => response.json())
+      .then((data) => {
+        for (let e = 0; e < data.length; e++) {
+          const addColorCardParams = {
+            //esta estructura es un obejto, donde yo escribo todos los datos que quiero pasarle a addCard y los obtengo del json.
+            columnAdd: 1,
+            type: "color",
+            title: data[e].role,
+            description: data[e].color,
+          };
+          addCard(addColorCardParams); //lamo a la funcion con los parametros que le di
+        }
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+/* resumen: lo mismo que los anteriores */
+function jokeCard() {
+  const img = [
+    "https://images.mubicdn.net/images/cast_member/28156/cache-4095-1478101707/image-w856.jpg?size=240x",
+    "https://img.washingtonpost.com/rf/image_1484w/2010-2019/WashingtonPost/2011/09/27/Style/Images/c92715.jpg?uuid=XjXZeukVEeCWYL6E-yTJeQ",
+    "https://upload.wikimedia.org/wikipedia/commons/3/30/Chuck_Norris_May_2015.jpg",
+  ];
+  const min = 0;
+  const max = img.length - 1;
+  const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  try {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then((response) => response.json())
+      .then((data) => {
+        const addJokeCardParams = {
+          columnAdd: 2,
+          type: "joke",
+          title: data.value,
+          description: img[randomNum],
+        };
+        addCard(addJokeCardParams);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+}
